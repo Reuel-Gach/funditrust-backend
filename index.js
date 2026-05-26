@@ -39,7 +39,7 @@ const getAccessToken = async () => {
 // ================= ROUTES ================= //
 
 // 1. REGISTER A NEW FUNDI (With Photo)
-app.post("/api/register", async (req, res) => {
+app.post("https://funditrust-api.onrender.com/api/register", async (req, res) => {
   try {
     const { name, skill, phone, locationName, image } = req.body;
     
@@ -66,7 +66,7 @@ app.post("/api/register", async (req, res) => {
 });
 
 // 2. GET ALL FUNDIS
-app.get("/api/fundis", async (req, res) => {
+app.get("https://funditrust-api.onrender.com/api/fundis", async (req, res) => {
   try {
     const allFundis = await pool.query("SELECT * FROM fundis");
     res.json(allFundis.rows);
@@ -77,7 +77,7 @@ app.get("/api/fundis", async (req, res) => {
 });
 
 // 3. GET REVIEWS FOR A FUNDI
-app.get("/api/reviews/:fundiId", async (req, res) => {
+app.get("https://funditrust-api.onrender.com/api/reviews/:fundiId", async (req, res) => {
   try {
     const { fundiId } = req.params;
     const reviews = await pool.query(
@@ -92,7 +92,7 @@ app.get("/api/reviews/:fundiId", async (req, res) => {
 });
 
 // 4. ADD A REVIEW (Update Rating)
-app.post("/api/reviews/:id", async (req, res) => {
+app.post("https://funditrust-api.onrender.com/api/reviews/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { rating, comment } = req.body;
@@ -121,7 +121,7 @@ app.post("/api/reviews/:id", async (req, res) => {
 });
 
 // 5. ADMIN: VERIFY FUNDI
-app.put("/api/verify/:id", async (req, res) => {
+app.put("https://funditrust-api.onrender.com/api/verify/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const update = await pool.query(
@@ -136,7 +136,7 @@ app.put("/api/verify/:id", async (req, res) => {
 });
 
 // 6. ADMIN: DELETE FUNDI (The Ban Hammer 🔨)
-app.delete("/api/fundis/:id", async (req, res) => {
+app.delete("https://funditrust-api.onrender.com/api/fundis/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query("DELETE FROM reviews WHERE fundi_id = $1", [id]);
@@ -149,7 +149,7 @@ app.delete("/api/fundis/:id", async (req, res) => {
 });
 
 // 7. 🚀 REAL M-PESA STK PUSH (With Custom Amount) 🚀
-app.post("/api/mpesa", async (req, res) => {
+app.post("https://funditrust-api.onrender.com/api/mpesa", async (req, res) => {
   const { phone, amount } = req.body; // ✅ Now receiving amount from frontend
   
   // Validation: Ensure amount is valid
@@ -207,7 +207,7 @@ app.post("/api/mpesa", async (req, res) => {
 });
 
 // 8. M-PESA CALLBACK (Receipt Receiver)
-app.post("/api/callback", (req, res) => {
+app.post("https://funditrust-api.onrender.com//api/callback", (req, res) => {
   console.log("📩 M-Pesa Callback Received:", JSON.stringify(req.body, null, 2));
   
   // Here you would check ResultCode === 0 to confirm payment success
